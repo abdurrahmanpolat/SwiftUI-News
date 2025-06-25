@@ -1,1 +1,456 @@
 # SwiftUI-News
+
+## HTML Dosyası İçeriği
+
+```html
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SwiftUI Evolution Timeline</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .title {
+            font-size: 3rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #007AFF, #5856D6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: #666;
+            font-weight: 500;
+        }
+
+        .timeline {
+            position: relative;
+            padding: 20px 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: linear-gradient(to bottom, #007AFF, #5856D6, #AF52DE, #FF2D92);
+            transform: translateX(-50%);
+            border-radius: 2px;
+        }
+
+        .timeline-item {
+            position: relative;
+            margin: 40px 0;
+            display: flex;
+            align-items: center;
+        }
+
+        .timeline-item:nth-child(odd) {
+            flex-direction: row;
+        }
+
+        .timeline-item:nth-child(even) {
+            flex-direction: row-reverse;
+        }
+
+        .timeline-content {
+            flex: 1;
+            max-width: 45%;
+            padding: 25px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            position: relative;
+        }
+
+        .timeline-item:nth-child(odd) .timeline-content {
+            margin-right: 5%;
+            border-left: 4px solid #007AFF;
+        }
+
+        .timeline-item:nth-child(even) .timeline-content {
+            margin-left: 5%;
+            border-right: 4px solid #5856D6;
+        }
+
+        .timeline-year {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, #007AFF, #5856D6);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 25px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            box-shadow: 0 4px 15px rgba(0, 122, 255, 0.3);
+            z-index: 10;
+        }
+
+        .timeline-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .timeline-features {
+            list-style: none;
+            margin: 15px 0;
+        }
+
+        .timeline-features li {
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+            color: #555;
+            font-weight: 500;
+        }
+
+        .timeline-features li::before {
+            content: '✦';
+            position: absolute;
+            left: 0;
+            color: #007AFF;
+            font-weight: bold;
+        }
+
+        .highlight-2025 {
+            background: linear-gradient(135deg, #FF6B6B, #4ECDC4) !important;
+            color: white !important;
+            transform: scale(1.05);
+            box-shadow: 0 15px 35px rgba(255, 107, 107, 0.3) !important;
+        }
+
+        .highlight-2025 .timeline-title {
+            color: white;
+        }
+
+        .highlight-2025 .timeline-features li {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .highlight-2025 .timeline-features li::before {
+            color: #FFE66D;
+        }
+
+        .wwdc-badge {
+            background: linear-gradient(135deg, #FF6B6B, #4ECDC4);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-left: 10px;
+        }
+
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+        }
+
+        .feature-icon {
+            font-size: 1.2rem;
+            margin-right: 8px;
+        }
+
+        @media (max-width: 768px) {
+            .timeline::before {
+                left: 30px;
+            }
+
+            .timeline-item {
+                flex-direction: column !important;
+                align-items: flex-start;
+            }
+
+            .timeline-content {
+                max-width: 100%;
+                margin-left: 60px !important;
+                margin-right: 0 !important;
+            }
+
+            .timeline-year {
+                left: 30px;
+                transform: translateX(-50%);
+            }
+
+            .title {
+                font-size: 2rem;
+            }
+        }
+
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 40px 0;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 900;
+            color: #007AFF;
+            display: block;
+        }
+
+        .stat-label {
+            color: #666;
+            font-weight: 600;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1 class="title">SwiftUI Evolution</h1>
+            <p class="subtitle">2019'dan WWDC 2025'e Kadar Gelişim Süreci</p>
+        </div>
+
+        <div class="stats-container">
+            <div class="stat-card">
+                <span class="stat-number">7</span>
+                <div class="stat-label">Yıl Gelişim</div>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number">50+</span>
+                <div class="stat-label">Yeni Özellik</div>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number">5</span>
+                <div class="stat-label">Platform</div>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number">100%</span>
+                <div class="stat-label">Declarative</div>
+            </div>
+        </div>
+
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-year">2019</div>
+                <div class="timeline-content">
+                    <h3 class="timeline-title">
+                        <span class="feature-icon">🚀</span>
+                        SwiftUI Doğuşu
+                        <span class="wwdc-badge">WWDC 19</span>
+                    </h3>
+                    <ul class="timeline-features">
+                        <li>Declarative UI Framework tanıtımı</li>
+                        <li>iOS, macOS, watchOS, tvOS desteği</li>
+                        <li>Live Preview özelliği</li>
+                        <li>Data binding ve State yönetimi</li>
+                        <li>Combine framework entegrasyonu</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-year">2020</div>
+                <div class="timeline-content">
+                    <h3 class="timeline-title">
+                        <span class="feature-icon">📱</span>
+                        SwiftUI 2.0
+                        <span class="wwdc-badge">WWDC 20</span>
+                    </h3>
+                    <ul class="timeline-features">
+                        <li>App lifecycle yönetimi (@main)</li>
+                        <li>Widgets için WidgetKit</li>
+                        <li>LazyVGrid ve LazyHGrid</li>
+                        <li>StateObject ve ObservedObject iyileştirmeleri</li>
+                        <li>matchedGeometryEffect</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-year">2021</div>
+                <div class="timeline-content">
+                    <h3 class="timeline-title">
+                        <span class="feature-icon">🎯</span>
+                        SwiftUI 3.0
+                        <span class="wwdc-badge">WWDC 21</span>
+                    </h3>
+                    <ul class="timeline-features">
+                        <li>AsyncImage ve async/await desteği</li>
+                        <li>Task ve TaskGroup</li>
+                        <li>Refreshable ve searchable modifiers</li>
+                        <li>FocusState ve focused modifier</li>
+                        <li>Canvas view for custom drawing</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-year">2022</div>
+                <div class="timeline-content">
+                    <h3 class="timeline-title">
+                        <span class="feature-icon">🎨</span>
+                        SwiftUI 4.0
+                        <span class="wwdc-badge">WWDC 22</span>
+                    </h3>
+                    <ul class="timeline-features">
+                        <li>Navigation API yenilikleri (NavigationStack)</li>
+                        <li>Charts framework</li>
+                        <li>ShareLink ve PhotosPicker</li>
+                        <li>Grid layout iyileştirmeleri</li>
+                        <li>Multi-date picker</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-year">2023</div>
+                <div class="timeline-content">
+                    <h3 class="timeline-title">
+                        <span class="feature-icon">🥽</span>
+                        SwiftUI 5.0
+                        <span class="wwdc-badge">WWDC 23</span>
+                    </h3>
+                    <ul class="timeline-features">
+                        <li>visionOS desteği</li>
+                        <li>3D content ve RealityKit entegrasyonu</li>
+                        <li>Observable macro (@Observable)</li>
+                        <li>Inspector sidebar</li>
+                        <li>MapKit improvements</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-year">2024</div>
+                <div class="timeline-content">
+                    <h3 class="timeline-title">
+                        <span class="feature-icon">⚡</span>
+                        SwiftUI 6.0
+                        <span class="wwdc-badge">WWDC 24</span>
+                    </h3>
+                    <ul class="timeline-features">
+                        <li>Swift 6 concurrency desteği</li>
+                        <li>Custom containers</li>
+                        <li>Mesh gradients</li>
+                        <li>Sensory feedback API</li>
+                        <li>Enhanced accessibility</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-year">2025</div>
+                <div class="timeline-content highlight-2025">
+                    <h3 class="timeline-title">
+                        <span class="feature-icon">🌟</span>
+                        SwiftUI 7.0 - Liquid Glass Era
+                        <span class="wwdc-badge">WWDC 25</span>
+                    </h3>
+                    <ul class="timeline-features">
+                        <li><strong>Liquid Glass Design Language</strong> - Yeni tasarım dili</li>
+                        <li><strong>Glass Effect Modifier</strong> - .glassEffect() API</li>
+                        <li><strong>Enhanced Tab Navigation</strong> - Yeni Tab API ve roller</li>
+                        <li><strong>ToolbarSpacer</strong> - Toolbar grup ayırıcı</li>
+                        <li><strong>GlassButtonStyle</strong> - Cam efektli butonlar</li>
+                        <li><strong>WebView Integration</strong> - Native WebKit desteği</li>
+                        <li><strong>AttributedString in TextEditor</strong> - Zengin metin editörü</li>
+                        <li><strong>macOS Performance Boost</strong> - List ve scroll optimizasyonları</li>
+                        <li><strong>Advanced Concurrency</strong> - Timeline ve async iyileştirmeleri</li>
+                        <li><strong>New Instruments Template</strong> - SwiftUI profiling araçları</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="glass-effect" style="padding: 30px; border-radius: 16px; margin-top: 40px; text-align: center;">
+            <h3 style="color: #333; margin-bottom: 15px; font-size: 1.5rem;">🎯 WWDC 2025 Öne Çıkanlar</h3>
+            <p style="color: #666; font-size: 1.1rem; line-height: 1.6;">
+                <strong>Liquid Glass</strong> tasarım dilinin tanıtımıyla SwiftUI yeni bir dönemece girdi. 
+                Şeffaflık, yuvarlaklık ve cam efektleriyle modern uygulamalara profesyonel bir görünüm kazandırıyor.
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // PNG olarak kaydetme fonksiyonu
+        function downloadAsPNG() {
+            html2canvas(document.querySelector('.container'), {
+                scale: 2,
+                backgroundColor: null,
+                useCORS: true
+            }).then(canvas => {
+                const link = document.createElement('a');
+                link.download = 'SwiftUI-Timeline-WWDC2025.png';
+                link.href = canvas.toDataURL();
+                link.click();
+            });
+        }
+
+        // Sayfa yüklendikten sonra animasyon
+        window.addEventListener('load', () => {
+            const timelineItems = document.querySelectorAll('.timeline-content');
+            timelineItems.forEach((item, index) => {
+                item.style.opacity = '0';
+                item.style.transform = 'translateY(50px)';
+                
+                setTimeout(() => {
+                    item.style.transition = 'all 0.6s ease-out';
+                    item.style.opacity = '1';
+                    item.style.transform = 'translateY(0)';
+                }, index * 200);
+            });
+        });
+
+        console.log('SwiftUI Timeline görselleştirmesi hazır! 🎨');
+        console.log('Sağ tık + "Farklı Kaydet" ile PNG olarak indirebilirsiniz.');
+    </script>
+
+    <!-- HTML2Canvas library for PNG export -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+</body>
+</html>
+```
